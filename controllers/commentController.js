@@ -71,11 +71,14 @@ const addComment = async (req, res) => {
 			user: req.userId,
 			post: postId,
 		});
-		const postRelated = await Post.findById(postId);
-		// push the comment into the post.comments array
-		postRelated.comment.push(comment);
-		// save and redirect...
-		await postRelated.save();
+		const postRelated = await Post.findByIdAndUpdate(
+			postId,
+			{
+				$push: comment,
+			},
+			{ new: true, timestamps: false }
+		);
+
 		res.json(comment);
 	} catch (error) {
 		res.status(500).json({ message: error });
