@@ -76,9 +76,8 @@ const addComment = async (req, res) => {
 			{
 				$push: comment,
 			},
-			{ timestamps: false }
+			{ returnDocument: 'after', timestamps: false }
 		);
-
 		res.json(comment);
 	} catch (error) {
 		res.status(500).json({ message: error });
