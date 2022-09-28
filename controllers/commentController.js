@@ -74,9 +74,11 @@ const addComment = async (req, res) => {
 		const postRelated = await Post.findByIdAndUpdate(
 			postId,
 			{
-				$push: comment,
+				$push: {
+					comment,
+				},
 			},
-			{ returnDocument: 'after', timestamps: false }
+			{ timestamps: false }
 		);
 		res.json(comment);
 	} catch (error) {
