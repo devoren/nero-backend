@@ -76,7 +76,7 @@ const addComment = async (req, res) => {
 			{
 				$push: comment,
 			},
-			{ new: true, timestamps: false }
+			{ timestamps: false }
 		);
 
 		res.json(comment);
