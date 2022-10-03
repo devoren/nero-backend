@@ -7,10 +7,8 @@ const getLastComments = async (req, res) => {
 		const comments = await Comment.find()
 			.populate('post')
 			.populate('user')
-			.limit(5)
 			.exec();
 		if (!comments) {
-			console.log(comments);
 			return res.status(204).json({ message: 'No comments found.' });
 		}
 		const diffComments = shuffleArray([...new Set(comments)]);

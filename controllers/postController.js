@@ -138,7 +138,7 @@ const deletePost = (req, res) => {
 	if (!postId) {
 		return res.status(400).json({ message: 'ID parametr is required.' });
 	}
-	Post.findOneAndDelete({ _id: postId }, (err, doc) => {
+	Post.findOneAndDelete({ _id: postId }, async (err, doc) => {
 		if (err)
 			return res
 				.status(500)
@@ -146,7 +146,7 @@ const deletePost = (req, res) => {
 		if (!doc) {
 			return res.status(204).json({ message: 'Статья не найдена' });
 		}
-		Comment.findOneAndDelete({ post: postId });
+		await Comment.deleteMany({ post: postId });
 		res.json({ success: true });
 	});
 };
