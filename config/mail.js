@@ -1,27 +1,10 @@
-// all emails are catched by ethereal.email
-const mailConfig = {
-	name: 'smtp.ethereal.email',
-	host: 'smtp.ethereal.email',
-	port: 587,
-	// secure: true,
-	auth: {
-		user: 'jeff.koelpin@ethereal.email',
-		pass: 'PJRWQ2kmzeww2nbF8j',
-	},
-	logger: true,
-	debug: true,
-	tls: {
-		rejectUnauthorized: false,
-	},
-};
-
 // send mail with defined transport object
 const mailOptions = {
 	from: '"Nero" <support@nero.com>',
-	subject: 'Пожалуйста, подтвердите свой адрес электронной почты',
+	subject: "Пожалуйста, подтвердите свой адрес электронной почты",
 	html: (otp) => {
 		const { type, value } = otp;
-		return type === 'otp'
+		return type === "otp"
 			? `
 		<!DOCTYPE html>
 		<html lang="ru" class="miro" style="background-color:#f3f4f8;font-size:0;line-height:0">
@@ -83,7 +66,7 @@ const mailOptions = {
 			                                           </div>
 		  </body>
 		</html>`
-			: type === 'token'
+			: type === "token"
 			? `
 		<!DOCTYPE html>
 		<html lang="ru" class="miro" style="background-color:#f3f4f8;font-size:0;line-height:0">
@@ -174,10 +157,10 @@ const mailOptions = {
 					<div class="miro-title-block__subtitle font-size-18 m-top-16" style="color:#050038;font-family:Helvetica,Arial,sans-serif;font-size:18px!important;font-stretch:normal;font-style:normal;font-weight:400;letter-spacing:normal;line-height:1.4;margin-top:16px;opacity:.6">Здравствуйте, ${
 						value[0]
 					}!<br><br>
-                        ${new Date(value[1]).toLocaleDateString('ru', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
+                        ${new Date(value[1]).toLocaleDateString("ru", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
 						})} в ${new Date(
 					value[1]
 			  ).toTimeString()} была обновлена информация, относящаяся к Вашему аккаунту. Вы изменили следующие данные:</div>
