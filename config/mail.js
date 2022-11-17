@@ -193,4 +193,4 @@ const mailOptions = {
 	},
 };
 
-module.exports = { mailOptions, mailConfig };
+module.exports = { mailOptions };
