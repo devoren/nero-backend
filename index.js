@@ -28,7 +28,7 @@ connectDB();
 app.use(logger);
 
 // adding Helmet to enhance your API's security
-app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
