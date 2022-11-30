@@ -1,15 +1,18 @@
-const Comment = require('../model/Comment');
-const Post = require('../model/Post');
-const shuffleArray = require('../utils/array');
+const Comment = require("../model/Comment");
+const Post = require("../model/Post");
+const shuffleArray = require("../utils/array");
 
 const getLastComments = async (req, res) => {
 	try {
 		const comments = await Comment.find()
-			.populate('post')
-			.populate('user')
+			.populate("post")
+			.populate(
+				"user",
+				"-password -refreshToken -lastLogin -active -otp -expriesAt"
+			)
 			.exec();
 		if (!comments) {
-			return res.status(204).json({ message: 'No comments found.' });
+			return res.status(204).json({ message: "No comments found." });
 		}
 		const diffComments = shuffleArray([...new Set(comments)]);
 		const slicedComments =
@@ -18,26 +21,29 @@ const getLastComments = async (req, res) => {
 	} catch (err) {
 		return res
 			.status(500)
-			.json({ message: 'Не удалось вернуть комментария', error: err });
+			.json({ message: "Не удалось вернуть комментария", error: err });
 	}
 };
 
 const getAllComments = async (req, res) => {
 	const { postId } = req.params;
 	const comments = await Comment.find({ post: postId })
-		.populate('post')
-		.populate('user')
+		.populate("post")
+		.populate(
+			"user",
+			"-password -refreshToken -lastLogin -active -otp -expriesAt"
+		)
 		.sort({ createdAt: -1 })
 		.exec();
 	if (!comments)
-		return res.status(204).json({ message: 'No comments found.' });
+		return res.status(204).json({ message: "No comments found." });
 	res.json(comments.filter((c) => c.user !== null));
 };
 
 const getComment = async (req, res) => {
 	const postId = req.params?.id;
 	if (!postId) {
-		return res.status(400).json({ message: 'ID parametr is required.' });
+		return res.status(400).json({ message: "ID parametr is required." });
 	}
 
 	Post.findOneAndUpdate(
@@ -45,20 +51,23 @@ const getComment = async (req, res) => {
 			_id: postId,
 		},
 		{
-			returnDocument: 'after',
+			returnDocument: "after",
 			timestamps: false,
 		},
 		(err, doc) => {
 			if (err)
 				return res
 					.status(500)
-					.json({ message: 'Не удалось вернуть статью', error: err });
+					.json({ message: "Не удалось вернуть статью", error: err });
 			if (!doc) {
-				return res.status(204).json({ message: 'Статья не найдена' });
+				return res.status(204).json({ message: "Статья не найдена" });
 			}
 			res.json(doc);
 		}
-	).populate('user');
+	).populate(
+		"user",
+		"-password -refreshToken -lastLogin -active -otp -expriesAt"
+	);
 };
 
 const addComment = async (req, res) => {
@@ -88,7 +97,7 @@ const updateComment = (req, res) => {
 	const postId = req.params?.id;
 	const { text } = req.body;
 	if (!postId) {
-		return res.status(400).json({ message: 'ID parametr is required.' });
+		return res.status(400).json({ message: "ID parametr is required." });
 	}
 	Post.findOneAndUpdate(
 		{ _id: postId },
@@ -97,15 +106,15 @@ const updateComment = (req, res) => {
 			user: req.userId,
 		},
 		{
-			returnDocument: 'after',
+			returnDocument: "after",
 		},
 		(err, doc) => {
 			if (err)
 				return res
 					.status(500)
-					.json({ message: 'Не удалось обновить комментарий' });
+					.json({ message: "Не удалось обновить комментарий" });
 			if (!doc) {
-				return res.status(204).json({ message: 'Статья не найдена' });
+				return res.status(204).json({ message: "Статья не найдена" });
 			}
 			res.json({ success: true });
 		}
@@ -115,15 +124,15 @@ const updateComment = (req, res) => {
 const deleteComment = (req, res) => {
 	const commentId = req.params?.postId;
 	if (!commentId) {
-		return res.status(400).json({ message: 'ID parametr is required.' });
+		return res.status(400).json({ message: "ID parametr is required." });
 	}
 	Comment.findOneAndDelete({ _id: commentId }, (err, doc) => {
 		if (err)
 			return res
 				.status(500)
-				.json({ message: 'Не удалось удалить комментарию' });
+				.json({ message: "Не удалось удалить комментарию" });
 		if (!doc) {
-			return res.status(204).json({ message: 'Комментарий не найден' });
+			return res.status(204).json({ message: "Комментарий не найден" });
 		}
 		res.json({ success: true });
 	});

@@ -1,9 +1,9 @@
-const User = require('../model/User');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const User = require("../model/User");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-const sendMail = require('../services/sendMail');
-const { generateOTP } = require('../utils/mail');
+const sendMail = require("../services/sendMail");
+const { generateOTP } = require("../utils/mail");
 
 const handleVerifyEmail = async (req, res) => {
 	const { email, otp } = req.body;
@@ -11,7 +11,7 @@ const handleVerifyEmail = async (req, res) => {
 		email,
 	});
 	if (!foundUser) {
-		return res.status(404).json({ message: 'Пользователь не найден' }); //Unauthorized
+		return res.status(404).json({ message: "Пользователь не найден" }); //Unauthorized
 	}
 	const match = await bcrypt.compare(otp, foundUser.otp);
 
@@ -27,14 +27,14 @@ const handleVerifyEmail = async (req, res) => {
 			},
 			process.env.ACCESS_TOKEN_SECRET,
 			{
-				expiresIn: '1d',
+				expiresIn: "1d",
 			}
 		);
 
 		res.status(200).json({ user: userData, accessToken });
 	} else {
 		res.status(400).json({
-			message: 'Неверный проверочный код',
+			message: "Неверный проверочный код",
 		});
 	}
 };
@@ -44,7 +44,7 @@ const handleResendCode = async (req, res) => {
 
 	const foundUser = await User.findOne({ email }).exec();
 	if (!foundUser) {
-		return res.status(401).json({ message: 'Пользователь не найден' }); //Unauthorized
+		return res.status(401).json({ message: "Пользователь не найден" }); //Unauthorized
 	}
 	if (foundUser) {
 		const salt = await bcrypt.genSalt(10);
@@ -68,4 +68,29 @@ const handleResendCode = async (req, res) => {
 	}
 };
 
-module.exports = { handleVerifyEmail, handleResendCode };
+const handleContact = async (req, res) => {
+	const { firstName, lastName, email, message, phone } = req.body;
+	const name = `${firstName} ${lastName}`;
+	const date = Date.now();
+
+	await sendMail({
+		to: "orennurkeldi1@gmail.com",
+		contact: true,
+		name,
+		message,
+		phone,
+		date,
+		email,
+		subject: `Contact Form Submission - Portfolio`,
+	})
+		.then(() => {
+			res.status(200).json({
+				message: `Message sent successfully`,
+			});
+		})
+		.catch((e) => {
+			console.log(e);
+		});
+};
+
+module.exports = { handleVerifyEmail, handleResendCode, handleContact };

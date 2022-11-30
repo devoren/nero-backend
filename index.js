@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const morgan = require("morgan");
 require("dotenv").config();
 
 const connectDB = require("./config/dbConn");
@@ -25,6 +27,9 @@ connectDB();
 // custom middleware logger
 app.use(logger);
 
+// adding Helmet to enhance your API's security
+app.use(helmet());
+
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
 app.use(credentials);
@@ -40,6 +45,9 @@ app.use(express.json());
 
 // middleware for cookies
 app.use(cookieParser());
+
+// adding morgan to log HTTP requests
+app.use(morgan("combined"));
 
 // serve static files
 app.use(
@@ -62,6 +70,8 @@ app.use(
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
+
+app.use("/contact", require("./routes/contact"));
 
 // have access without access token
 app.get("/posts", postController.getAllPosts);
