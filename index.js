@@ -22,7 +22,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // connect to MongoDB
-connectDB();
+// connectDB();
 
 // custom middleware logger
 // app.use(logger);
@@ -92,9 +92,8 @@ app.use("/posts", require("./routes/api/posts"));
 
 app.use(errorHandler);
 
-mongoose.connection.once("open", () => {
-	console.log("Connected to MongoDB");
+connectDB().then(() =>
 	app.listen(PORT, () => {
 		console.log(`Server running on port: ${PORT}`);
-	});
-});
+	})
+);
