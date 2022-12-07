@@ -49,6 +49,8 @@ app.use(cookieParser());
 // adding morgan to log HTTP requests
 app.use(morgan("combined"));
 
+app.use(compression()); // Compress all routes
+
 // serve static files
 app.use(
 	"/",
