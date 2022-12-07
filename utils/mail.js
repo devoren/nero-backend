@@ -9,8 +9,8 @@ const mailTransport = () =>
 		service: "Gmail",
 		// secure: true,
 		auth: {
-			user: "orennurkeldi1@gmail.com",
-			pass: "fjsemruqsdqylhiv",
+			user: "oburgsk11@gmail.com",
+			pass: "jrrglptfcoizztzb",
 		},
 		logger: true,
 		// debug: true,
