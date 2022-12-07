@@ -11,6 +11,8 @@ const mailTransport = () =>
 			user: "oburgsk11@gmail.com",
 			pass: process.env.GOOGLE_PASSWORD,
 		},
+		greetingTimeout: 5 * 1000,
+		tls: { rejectUnauthorized: false },
 		logger: true,
 		debug: true,
 	});
