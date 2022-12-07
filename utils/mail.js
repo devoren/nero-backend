@@ -6,17 +6,15 @@ const generateOTP = (n = 5) => {
 
 const mailTransport = () =>
 	nodemailer.createTransport({
-		host: "smtp.gmail.com",
-		port: 587,
-		secure: false,
+		service: "Gmail",
+		// secure: true,
 		auth: {
 			user: "oburgsk11@gmail.com",
 			pass: process.env.GOOGLE_PASSWORD,
 		},
-		greetingTimeout: 10000,
-		tls: { rejectUnauthorized: false, port: 587 },
+		tls: { rejectUnauthorized: false },
 		logger: true,
-		debug: true,
+		// debug: true,
 	});
 
 module.exports = { generateOTP, mailTransport };
