@@ -9,7 +9,6 @@ const corsOptions = {
 		}
 	},
 	optionsSuccessStatus: 200,
-	methods: "GET, PUT",
 };
 
 module.exports = corsOptions;
