@@ -7,15 +7,14 @@ const generateOTP = (n = 5) => {
 let mailConfig;
 if (process.env.NODE_ENV === "production") {
 	mailConfig = {
-		service: "Gmail",
-		secure: true,
-		port: 465,
+		port: 587,
+		secure: false,
 		auth: {
-			user: "oburgsk11@gmail.com",
-			pass: process.env.GOOGLE_PASSWORD,
+			user: process.env.EMAIL,
+			pass: process.env.EMAIL_PWD,
 		},
-		tls: { rejectUnauthorized: false },
 		logger: true,
+		pool: true,
 		// debug: true,
 	};
 } else {
@@ -23,8 +22,8 @@ if (process.env.NODE_ENV === "production") {
 		service: "Gmail",
 		// secure: true,
 		auth: {
-			user: "oburgsk11@gmail.com",
-			pass: process.env.GOOGLE_PASSWORD,
+			user: process.env.EMAIL,
+			pass: process.env.EMAIL_PWD,
 		},
 		tls: { rejectUnauthorized: false },
 		logger: true,
