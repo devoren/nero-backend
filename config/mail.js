@@ -1,6 +1,6 @@
 // send mail with defined transport object
 const mailOptions = {
-	from: '"Nero"<support@nero-frontend.vercel.app>',
+	from: '"Nero"<oburgsk11@gmail.com>',
 	subject: "Пожалуйста, подтвердите свой адрес электронной почты",
 	html: (otp) => {
 		const { type, value, name, email, message, phone, date } = otp;
