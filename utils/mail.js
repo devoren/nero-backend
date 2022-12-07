@@ -4,8 +4,22 @@ const generateOTP = (n = 5) => {
 	return Math.round(Math.random() * 9 * 10 ** n);
 };
 
-const mailTransport = () =>
-	nodemailer.createTransport({
+let mailConfig;
+if (process.env.NODE_ENV === "production") {
+	mailConfig = {
+		service: "Gmail",
+		secure: true,
+		port: 465,
+		auth: {
+			user: "oburgsk11@gmail.com",
+			pass: process.env.GOOGLE_PASSWORD,
+		},
+		tls: { rejectUnauthorized: false },
+		logger: true,
+		// debug: true,
+	};
+} else {
+	mailConfig = {
 		service: "Gmail",
 		// secure: true,
 		auth: {
@@ -15,15 +29,9 @@ const mailTransport = () =>
 		tls: { rejectUnauthorized: false },
 		logger: true,
 		// debug: true,
-	});
+	};
+}
 
-mailTransport().verify((error) => {
-	if (error) {
-		console.error("Server cannot send messages");
-		console.error(error);
-		throw error;
-	} else {
-		console.log("Server is ready to send messages");
-	}
-});
+const mailTransport = () => nodemailer.createTransport(mailConfig);
+
 module.exports = { generateOTP, mailTransport };
