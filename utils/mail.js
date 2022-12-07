@@ -17,4 +17,13 @@ const mailTransport = () =>
 		// debug: true,
 	});
 
+mailTransport().verify((error) => {
+	if (error) {
+		console.error("Server cannot send messages");
+		console.error(error);
+		throw error;
+	} else {
+		console.log("Server is ready to send messages");
+	}
+});
 module.exports = { generateOTP, mailTransport };
