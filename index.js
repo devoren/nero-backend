@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 8000;
 connectDB();
 
 // custom middleware logger
-app.use(logger);
+// app.use(logger);
 
 // adding Helmet to enhance your API's security
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
