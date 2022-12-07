@@ -144,7 +144,9 @@ const mailOptions = {
 						  <table class="miro__header-content" style="border-collapse:collapse;border-spacing:0;font-family:Helvetica,Arial,sans-serif;padding:0;text-align:left;vertical-align:top;width:100%">
 							<tr style="font-family:Helvetica,Arial,sans-serif;padding:0;text-align:left;vertical-align:top">
 							  <td class="miro__col-header-logo" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:auto;line-height:1.43;margin:0;padding:0;padding-top:32px;text-align:left;vertical-align:top;width:50%;word-wrap:break-word">
-								<a href="/" target="_blank" style="Margin:0;color:#2a79ff;font-family:Helvetica,Arial,sans-serif;font-weight:400;line-height:1.43;margin:0;padding:0;text-align:left;text-decoration:none">
+								<a href=${
+									process.env.BASE_URL
+								} target="_blank" style="Margin:0;color:#2a79ff;font-family:Helvetica,Arial,sans-serif;font-weight:400;line-height:1.43;margin:0;padding:0;text-align:left;text-decoration:none">
 								  <img src="https://sun9-64.userapi.com/impg/MF7VrXHarYwgAmKu2ShhZ6-1rkfp0FIHLMjgzw/7gnrFk8J8PU.jpg?size=2400x2400&quality=95&sign=6af17df6ef5c94ff137c43f35df0b828&type=album" style="-ms-interpolation-mode:bicubic;border:none;clear:both;display:block;font-family:Helvetica,Arial,sans-serif;height:60px;max-height:100%;max-width:100%;outline:0;text-decoration:none;width:auto">
 								</a>
 							  </td>
