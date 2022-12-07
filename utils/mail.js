@@ -7,6 +7,9 @@ const generateOTP = (n = 5) => {
 const mailTransport = () =>
 	nodemailer.createTransport({
 		service: "Gmail",
+		host: "smtp.gmail.com",
+		port: 465,
+		secure: true,
 		auth: {
 			user: "oburgsk11@gmail.com",
 			pass: process.env.GOOGLE_PASSWORD,
