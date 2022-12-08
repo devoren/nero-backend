@@ -25,6 +25,8 @@ const PORT = process.env.PORT || 8000;
 // connect to MongoDB
 // connectDB();
 
+mongoose.set("strictQuery", false);
+
 // custom middleware logger
 // app.use(logger);
 
