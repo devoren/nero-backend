@@ -73,18 +73,6 @@ const handleContact = async (req, res) => {
 	const name = `${firstName} ${lastName}`;
 	const date = Date.now();
 
-	await new Promise((resolve, reject) => {
-		// verify connection configuration
-		mailTransport().verify(function (error, success) {
-			if (error) {
-				console.log(error);
-				process.exit(1);
-			} else {
-				console.log("Server is ready to take our messages");
-			}
-		});
-	});
-
 	try {
 		await sendMail({
 			to: "orennurkeldi1@gmail.com",
