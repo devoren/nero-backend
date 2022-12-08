@@ -78,10 +78,9 @@ const handleContact = async (req, res) => {
 		mailTransport().verify(function (error, success) {
 			if (error) {
 				console.log(error);
-				reject(error);
+				process.exit(1);
 			} else {
 				console.log("Server is ready to take our messages");
-				resolve(success);
 			}
 		});
 	});
@@ -104,6 +103,7 @@ const handleContact = async (req, res) => {
 			})
 			.catch((e) => {
 				console.log(e);
+				process.exit(1);
 			});
 	} catch (error) {
 		console.log(error);
