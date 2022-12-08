@@ -23,7 +23,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // connect to MongoDB
-// connectDB();
+connectDB();
 
 mongoose.set("strictQuery", false);
 
@@ -97,8 +97,9 @@ app.use("/posts", require("./routes/api/posts"));
 
 app.use(errorHandler);
 
-connectDB().then(() =>
+mongoose.connection.once("open", () => {
+	console.log("Connected to MongoDB");
 	app.listen(PORT, () => {
 		console.log(`Server running on port: ${PORT}`);
-	})
-);
+	});
+});
