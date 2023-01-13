@@ -12,7 +12,6 @@ const connectDB = require("./config/dbConn");
 const credentials = require("./middleware/credentials");
 const corsOptions = require("./config/corsOptions");
 
-const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
 
@@ -22,10 +21,9 @@ const commentController = require("./controllers/commentController");
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+mongoose.set("strictQuery", false);
 // connect to MongoDB
 connectDB();
-
-mongoose.set("strictQuery", false);
 
 // custom middleware logger
 // app.use(logger);
