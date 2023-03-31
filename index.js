@@ -36,7 +36,12 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(credentials);
 
 // cors
-app.use(cors(corsOptions));
+app.use(
+	cors({
+		credentials: true,
+		origin: "https://nero-frontend.vercel.app",
+	})
+);
 
 // Built-in middleware to handle urlencoded  form data:
 app.use(express.urlencoded({ extended: false }));
