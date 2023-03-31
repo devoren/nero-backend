@@ -11,6 +11,7 @@ require("dotenv").config();
 const connectDB = require("./config/dbConn");
 const credentials = require("./middleware/credentials");
 const corsOptions = require("./config/corsOptions");
+const allowedOrigins = require("./config/allowedOrigins");
 
 const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
@@ -39,7 +40,18 @@ app.use(credentials);
 app.use(
 	cors({
 		credentials: true,
-		origin: "https://nero-frontend.vercel.app",
+		origin: function (origin, callback) {
+			// allow requests with no origin
+			// (like mobile apps or curl requests)
+			if (!origin) return callback(null, true);
+			if (allowedOrigins.indexOf(origin) === -1) {
+				var msg =
+					"The CORS policy for this site does not " +
+					"allow access from the specified Origin.";
+				return callback(new Error(msg), false);
+			}
+			return callback(null, true);
+		},
 	})
 );
 
